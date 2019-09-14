@@ -15,11 +15,18 @@ class ChoresList extends React.Component {
             chores: props.chores,
         };
         this.handleRemoveChores = this.handleRemoveChores.bind(this);
+        this.handleRemoveChore = this.handleRemoveChore.bind(this);
         this.handleAddChore = this.handleAddChore.bind(this);
         this.handleSelectRandomChore = this.handleSelectRandomChore.bind(this);
     }
     handleRemoveChores() {
         this.setState(() => ({ chores: [] }));
+    }
+
+    handleRemoveChore(choreToRemove) {
+        this.setState(prevState => ({
+            chores: prevState.chores.filter(chore => chore !== choreToRemove),
+        }));
     }
 
     handleAddChore(value) {
@@ -52,6 +59,7 @@ class ChoresList extends React.Component {
                 <Chores
                     chores={this.state.chores}
                     handleRemoveChores={this.handleRemoveChores}
+                    handleRemoveChore={this.handleRemoveChore}
                 />
                 <AddChore handleAddChore={this.handleAddChore} />
             </div>
@@ -95,7 +103,11 @@ const Chores = props => {
             These are your chores (there are currently {props.chores.length}):
             <ul>
                 {props.chores.map(chore => (
-                    <Chore chore={chore} key={chore} />
+                    <Chore
+                        chore={chore}
+                        key={chore}
+                        handleRemoveChore={props.handleRemoveChore}
+                    />
                 ))}
             </ul>
             {props.chores.length < 1 ? (
@@ -110,7 +122,18 @@ const Chores = props => {
 };
 
 const Chore = props => {
-    return <li>{props.chore}</li>;
+    return (
+        <li>
+            {props.chore}{' '}
+            <button
+                onClick={e => {
+                    props.handleRemoveChore(props.chore);
+                }}
+            >
+                remove
+            </button>
+        </li>
+    );
 };
 
 class AddChore extends React.Component {

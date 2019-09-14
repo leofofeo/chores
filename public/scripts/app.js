@@ -30,6 +30,7 @@ var ChoresList = function (_React$Component) {
             chores: props.chores
         };
         _this.handleRemoveChores = _this.handleRemoveChores.bind(_this);
+        _this.handleRemoveChore = _this.handleRemoveChore.bind(_this);
         _this.handleAddChore = _this.handleAddChore.bind(_this);
         _this.handleSelectRandomChore = _this.handleSelectRandomChore.bind(_this);
         return _this;
@@ -40,6 +41,17 @@ var ChoresList = function (_React$Component) {
         value: function handleRemoveChores() {
             this.setState(function () {
                 return { chores: [] };
+            });
+        }
+    }, {
+        key: 'handleRemoveChore',
+        value: function handleRemoveChore(choreToRemove) {
+            this.setState(function (prevState) {
+                return {
+                    chores: prevState.chores.filter(function (chore) {
+                        return chore !== choreToRemove;
+                    })
+                };
             });
         }
     }, {
@@ -76,7 +88,8 @@ var ChoresList = function (_React$Component) {
                 }),
                 React.createElement(Chores, {
                     chores: this.state.chores,
-                    handleRemoveChores: this.handleRemoveChores
+                    handleRemoveChores: this.handleRemoveChores,
+                    handleRemoveChore: this.handleRemoveChore
                 }),
                 React.createElement(AddChore, { handleAddChore: this.handleAddChore })
             );
@@ -137,7 +150,11 @@ var Chores = function Chores(props) {
             'ul',
             null,
             props.chores.map(function (chore) {
-                return React.createElement(Chore, { chore: chore, key: chore });
+                return React.createElement(Chore, {
+                    chore: chore,
+                    key: chore,
+                    handleRemoveChore: props.handleRemoveChore
+                });
             })
         ),
         props.chores.length < 1 ? '' : React.createElement(
@@ -152,7 +169,17 @@ var Chore = function Chore(props) {
     return React.createElement(
         'li',
         null,
-        props.chore
+        props.chore,
+        ' ',
+        React.createElement(
+            'button',
+            {
+                onClick: function onClick(e) {
+                    props.handleRemoveChore(props.chore);
+                }
+            },
+            'remove'
+        )
     );
 };
 
