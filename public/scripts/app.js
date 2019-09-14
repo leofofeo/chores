@@ -37,6 +37,33 @@ var ChoresList = function (_React$Component) {
     }
 
     _createClass(ChoresList, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            try {
+                var json = localStorage.getItem('chores');
+                var chores = JSON.parse(json);
+                if (chores) {
+                    this.setState(function () {
+                        return { chores: chores };
+                    });
+                }
+            } catch (e) {}
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            if (prevState.chores.length !== this.state.chores.length) {
+                var json = JSON.stringify(this.state.chores);
+                localStorage.setItem('chores', json);
+            }
+            console.log('componentDidUpdate!');
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            console.log('component will unmount!');
+        }
+    }, {
         key: 'handleRemoveChores',
         value: function handleRemoveChores() {
             this.setState(function () {

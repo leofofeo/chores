@@ -19,6 +19,29 @@ class ChoresList extends React.Component {
         this.handleAddChore = this.handleAddChore.bind(this);
         this.handleSelectRandomChore = this.handleSelectRandomChore.bind(this);
     }
+
+    componentDidMount() {
+        try {
+            const json = localStorage.getItem('chores');
+            const chores = JSON.parse(json);
+            if (chores) {
+                this.setState(() => ({ chores }));
+            }
+        } catch (e) {}
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.chores.length !== this.state.chores.length) {
+            const json = JSON.stringify(this.state.chores);
+            localStorage.setItem('chores', json);
+        }
+        console.log('componentDidUpdate!');
+    }
+
+    componentWillUnmount() {
+        console.log('component will unmount!');
+    }
+
     handleRemoveChores() {
         this.setState(() => ({ chores: [] }));
     }
