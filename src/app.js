@@ -1,12 +1,15 @@
-// import Header from './components/Header';
-// import Action from './components/Action';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import AddChore from './components/AddChore';
+import Chores from './components/Chores';
+import DecisionMaker from './components/DecisionMaker';
+import Header from './components/Header';
 
 const addSpacingStyle = {
     margin: '10px',
     paddingTop: '5px',
     paddingBottom: '5px',
 };
-
 class ChoresList extends React.Component {
     constructor(props) {
         super(props);
@@ -35,11 +38,6 @@ class ChoresList extends React.Component {
             const json = JSON.stringify(this.state.chores);
             localStorage.setItem('chores', json);
         }
-        console.log('componentDidUpdate!');
-    }
-
-    componentWillUnmount() {
-        console.log('component will unmount!');
     }
 
     handleRemoveChores() {
@@ -74,8 +72,8 @@ class ChoresList extends React.Component {
     render() {
         return (
             <div>
-                <Header subTitle={this.state.subTitle} />
-                <Action
+                <Header subtitle={this.state.subTitle} />
+                <DecisionMaker
                     hasChores={this.state.chores.length > 0}
                     handleSelectRandomChore={this.handleSelectRandomChore}
                 />
@@ -93,113 +91,6 @@ class ChoresList extends React.Component {
 ChoresList.defaultProps = {
     chores: [],
 };
-
-const Header = props => {
-    return (
-        <div>
-            <h1>{props.title}</h1>
-            <h2>{props.subTitle}</h2>
-        </div>
-    );
-};
-
-Header.defaultProps = {
-    title: 'Chores',
-};
-
-const Action = props => {
-    return (
-        <div style={addSpacingStyle}>
-            <button
-                onClick={props.handleSelectRandomChore}
-                disabled={!props.hasChores}
-            >
-                What should i do?
-            </button>
-        </div>
-    );
-};
-
-const Chores = props => {
-    return (
-        <div>
-            These are your chores (there are currently {props.chores.length}):
-            <ul>
-                {props.chores.map(chore => (
-                    <Chore
-                        chore={chore}
-                        key={chore}
-                        handleRemoveChore={props.handleRemoveChore}
-                    />
-                ))}
-            </ul>
-            {props.chores.length < 1 ? (
-                ''
-            ) : (
-                <button onClick={props.handleRemoveChores}>
-                    Clear all chores
-                </button>
-            )}
-        </div>
-    );
-};
-
-const Chore = props => {
-    return (
-        <li>
-            {props.chore}{' '}
-            <button
-                onClick={e => {
-                    props.handleRemoveChore(props.chore);
-                }}
-            >
-                remove
-            </button>
-        </li>
-    );
-};
-
-class AddChore extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = {
-            err: undefined,
-        };
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        const newChore = e.target.chore.value.trim();
-
-        const err = this.props.handleAddChore(newChore);
-        if (err) {
-            console.log(err);
-            this.setState(() => ({ err }));
-        }
-        e.target.chore.value = '';
-    }
-    render() {
-        return (
-            <div style={addSpacingStyle}>
-                {this.state.error && <div>{this.state.error}</div>}
-                <form onSubmit={this.handleSubmit}>
-                    <input type="text" name="chore" />
-                    <button>Add chore</button>
-                </form>
-            </div>
-        );
-    }
-}
-
-// const User = props => {
-//     return (
-//         <div>
-//             <p>Name: {props.name}</p>
-//             <p>Age: {props.age}</p>
-//         </div>
-//     );
-// };
 
 const appRoot = document.getElementById('app');
 ReactDOM.render(<ChoresList />, appRoot);
