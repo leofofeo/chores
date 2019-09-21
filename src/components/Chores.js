@@ -3,8 +3,25 @@ import Chore from './Chore';
 
 const Chores = props => (
     <div>
-        These are your chores (there are currently {props.chores.length}):
-        <ul>
+        {props.chores.length > 0 && (
+            <div className="widget-header">
+                <h3 className=".widget-header__title">
+                    These are your chores:
+                </h3>
+                {props.chores.length < 1 ? (
+                    ''
+                ) : (
+                    <button
+                        className="button button--link"
+                        onClick={props.handleRemoveChores}
+                    >
+                        Clear all chores
+                    </button>
+                )}
+            </div>
+        )}
+
+        <div className="widget-chores">
             {props.chores.map(chore => (
                 <Chore
                     chore={chore}
@@ -12,12 +29,7 @@ const Chores = props => (
                     handleRemoveChore={props.handleRemoveChore}
                 />
             ))}
-        </ul>
-        {props.chores.length < 1 ? (
-            ''
-        ) : (
-            <button onClick={props.handleRemoveChores}>Clear all chores</button>
-        )}
+        </div>
     </div>
 );
 

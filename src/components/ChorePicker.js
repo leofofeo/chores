@@ -11,8 +11,9 @@ const ChorePicker = props => (
         <button
             onClick={props.handleSelectRandomChore}
             disabled={!props.hasChores}
+            className="big-button"
         >
-            What should i do?
+            What should I do?
         </button>
     </div>
 );

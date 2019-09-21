@@ -1,16 +1,17 @@
 import React from 'react';
 
 const Chore = props => (
-    <li>
-        {props.chore}{' '}
+    <div className="widget-chores__chore">
+        <span className="chore">{props.chore} </span>
         <button
             onClick={e => {
                 props.handleRemoveChore(props.chore);
             }}
+            className="button button--link"
         >
             remove
         </button>
-    </li>
+    </div>
 );
 
 export default Chore;

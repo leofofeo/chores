@@ -1,0 +1,19 @@
+.header {
+    background: $main-green;
+    margin-bottom: $xl-size;
+    padding: $m-size 0;
+    color: #ffffff;
+
+}
+
+.header__title {
+    font-size: $l-size;
+    margin: 0;
+}
+
+.header__subtitle {
+    color: $sub-green;
+    font-weight: 500;
+    font-size: $m-size;
+    margin:0;
+}

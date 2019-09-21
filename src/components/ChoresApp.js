@@ -73,16 +73,21 @@ class ChoresApp extends React.Component {
         return (
             <div>
                 <Header subtitle={this.state.subTitle} />
-                <ChorePicker
-                    hasChores={this.state.chores.length > 0}
-                    handleSelectRandomChore={this.handleSelectRandomChore}
-                />
-                <Chores
-                    chores={this.state.chores}
-                    handleRemoveChores={this.handleRemoveChores}
-                    handleRemoveChore={this.handleRemoveChore}
-                />
-                <AddChore handleAddChore={this.handleAddChore} />
+                <div className="container ">
+                    <ChorePicker
+                        hasChores={this.state.chores.length > 0}
+                        handleSelectRandomChore={this.handleSelectRandomChore}
+                    />
+                    <div className="widget">
+                        <Chores
+                            chores={this.state.chores}
+                            handleRemoveChores={this.handleRemoveChores}
+                            handleRemoveChore={this.handleRemoveChore}
+                        />
+                        <AddChore handleAddChore={this.handleAddChore} />
+                    </div>
+                </div>
+
                 <ChoreModal
                     selectedChore={this.state.selectedChore}
                     handleClearModal={this.handleClearModal}

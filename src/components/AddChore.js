@@ -1,11 +1,5 @@
 import React from 'react';
 
-const addSpacingStyle = {
-    margin: '10px',
-    paddingTop: '5px',
-    paddingBottom: '5px',
-};
-
 export default class AddChore extends React.Component {
     state = {
         err: undefined,
@@ -23,11 +17,13 @@ export default class AddChore extends React.Component {
     };
     render() {
         return (
-            <div style={addSpacingStyle}>
-                {this.state.error && <div>{this.state.error}</div>}
-                <form onSubmit={this.handleSubmit}>
+            <div className="widget-form-area">
+                {this.state.err && (
+                    <p className="add-chore-error">{this.state.err}</p>
+                )}
+                <form onSubmit={this.handleSubmit} className="add-chore-form">
                     <input type="text" name="chore" />
-                    <button>Add chore</button>
+                    <button className="button">Add chore</button>
                 </form>
             </div>
         );
