@@ -10,17 +10,39 @@ const addSpacingStyle = {
     paddingBottom: '5px',
 };
 class ChoresApp extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            subTitle: 'Let the app decide which chore you tackle next',
-            chores: props.chores,
-        };
-        this.handleRemoveChores = this.handleRemoveChores.bind(this);
-        this.handleRemoveChore = this.handleRemoveChore.bind(this);
-        this.handleAddChore = this.handleAddChore.bind(this);
-        this.handleSelectRandomChore = this.handleSelectRandomChore.bind(this);
-    }
+    state = {
+        subTitle: 'Let the app decide which chore you tackle next',
+        chores: [],
+    };
+
+    handleRemoveChores = () => {
+        this.setState(() => ({ chores: [] }));
+    };
+
+    handleRemoveChore = choreToRemove => {
+        this.setState(prevState => ({
+            chores: prevState.chores.filter(chore => chore !== choreToRemove),
+        }));
+    };
+
+    handleAddChore = value => {
+        if (!value) {
+            return 'Enter a valid value to add item';
+        } else if (this.state.chores.indexOf(value) > -1) {
+            return 'This chore already exists';
+        }
+        this.setState(prevState => ({
+            chores: prevState.chores.concat([value]),
+        }));
+    };
+
+    handleSelectRandomChore = () => {
+        const randomIndex = Math.floor(
+            Math.random() * this.state.chores.length
+        );
+        const activity = this.state.chores[randomIndex];
+        console.log(activity);
+    };
 
     componentDidMount() {
         try {
@@ -37,35 +59,6 @@ class ChoresApp extends React.Component {
             const json = JSON.stringify(this.state.chores);
             localStorage.setItem('chores', json);
         }
-    }
-
-    handleRemoveChores() {
-        this.setState(() => ({ chores: [] }));
-    }
-
-    handleRemoveChore(choreToRemove) {
-        this.setState(prevState => ({
-            chores: prevState.chores.filter(chore => chore !== choreToRemove),
-        }));
-    }
-
-    handleAddChore(value) {
-        if (!value) {
-            return 'Enter a valid value to add item';
-        } else if (this.state.chores.indexOf(value) > -1) {
-            return 'This chore already exists';
-        }
-        this.setState(prevState => ({
-            chores: prevState.chores.concat([value]),
-        }));
-    }
-
-    handleSelectRandomChore() {
-        const randomIndex = Math.floor(
-            Math.random() * this.state.chores.length
-        );
-        const activity = this.state.chores[randomIndex];
-        console.log(activity);
     }
 
     render() {

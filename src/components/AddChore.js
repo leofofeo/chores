@@ -7,15 +7,10 @@ const addSpacingStyle = {
 };
 
 export default class AddChore extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.state = {
-            err: undefined,
-        };
-    }
-
-    handleSubmit(e) {
+    state = {
+        err: undefined,
+    };
+    handleSubmit = e => {
         e.preventDefault();
         const newChore = e.target.chore.value.trim();
 
@@ -25,7 +20,7 @@ export default class AddChore extends React.Component {
             this.setState(() => ({ err }));
         }
         e.target.chore.value = '';
-    }
+    };
     render() {
         return (
             <div style={addSpacingStyle}>
