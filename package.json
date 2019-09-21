@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "live-server public",
-    "build": "webpack --watch",
-    "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch"
+    "build": "webpack",
+    "dev-server": "webpack-dev-server"
   },
   "author": "leofofeo",
   "license": "ISC",
@@ -21,7 +21,8 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "validator": "^11.1.0",
-    "webpack": "^4.40.2"
+    "webpack": "^4.40.2",
+    "webpack-dev-server": "^3.8.1"
   },
   "devDependencies": {
     "webpack-cli": "^3.3.8"
