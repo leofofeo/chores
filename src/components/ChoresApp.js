@@ -1,8 +1,9 @@
 import React from 'react';
 import AddChore from './AddChore';
 import Chores from './Chores';
-import DecisionMaker from './DecisionMaker';
+import ChorePicker from './ChorePicker';
 import Header from './Header';
+import ChoreModal from './ChoreModal';
 
 const addSpacingStyle = {
     margin: '10px',
@@ -13,6 +14,7 @@ class ChoresApp extends React.Component {
     state = {
         subTitle: 'Let the app decide which chore you tackle next',
         chores: [],
+        selectedChore: undefined,
     };
 
     handleRemoveChores = () => {
@@ -42,6 +44,12 @@ class ChoresApp extends React.Component {
         );
         const activity = this.state.chores[randomIndex];
         console.log(activity);
+        this.setState(() => ({ selectedChore: activity }));
+    };
+
+    handleClearModal = () => {
+        console.log('from handle clearModal');
+        this.setState(() => ({ selectedChore: undefined }));
     };
 
     componentDidMount() {
@@ -65,7 +73,7 @@ class ChoresApp extends React.Component {
         return (
             <div>
                 <Header subtitle={this.state.subTitle} />
-                <DecisionMaker
+                <ChorePicker
                     hasChores={this.state.chores.length > 0}
                     handleSelectRandomChore={this.handleSelectRandomChore}
                 />
@@ -75,6 +83,10 @@ class ChoresApp extends React.Component {
                     handleRemoveChore={this.handleRemoveChore}
                 />
                 <AddChore handleAddChore={this.handleAddChore} />
+                <ChoreModal
+                    selectedChore={this.state.selectedChore}
+                    handleClearModal={this.handleClearModal}
+                />
             </div>
         );
     }
